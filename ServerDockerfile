@@ -1,0 +1,12 @@
+FROM golang:1.16.5
+
+WORKDIR /src/ehkos
+
+COPY . .
+
+WORKDIR src
+
+RUN go mod download
+RUN go install -v main.go
+
+CMD ["main", "run", "server", "-b", "tcp://vernemq:1883", "-c", "test_server", "-t", "test"]

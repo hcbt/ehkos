@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+    vernemq:
+        image: vernemq/vernemq
+        environment:
+            DOCKER_VERNEMQ_ACCEPT_EULA: "${DOCKER_VERNEMQ_ACCEPT_EULA}"
+            DOCKER_VERNEMQ_ALLOW_ANONYMOUS: "${DOCKER_VERNEMQ_ALLOW_ANONYMOUS}" 
+        ports: 
+            - 1883:1883
+            - 8888:8888
+
+    server:
+        build:
+            context: .
+            dockerfile: ServerDockerfile
+        restart: on-failure
+        depends_on:
+            - vernemq
